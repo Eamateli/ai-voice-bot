@@ -1,5 +1,5 @@
 # ai-voice-bot
-AI Voice Customer Service Platform
+
 The goal with this project is to learn by building an AI-powered voice assistant that automates customer service phone calls for businesses with 24/7 support and natural language understanding.
 What This Does
 
