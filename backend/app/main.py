@@ -16,6 +16,6 @@ async def test_ai_endpoint():
 @app.post("/api/v1/chat", response_model=ChatRespose)
 async def chat(request: ChatRequest):
     return ChatRespose (
-        response=f"You said: {request.message}"
+        response=f"You said: {request.message}",
         token_used=10
-    )
+    ) 
