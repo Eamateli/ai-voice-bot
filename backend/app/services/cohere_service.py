@@ -1,11 +1,11 @@
 import cohere 
 from app.config import settings
 
-co = cohere.Client(settings.cohere_api_key)
+co = cohere.Client(settings.COHERE_API_KEY)
 
 def test_cohere():
     response = co.generate(
-        model ="command-r",
+        model ="command",
         prompt="Say hello!",
         max_tokens=50
 

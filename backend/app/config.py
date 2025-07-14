@@ -1,7 +1,11 @@
 from  pydantic_settings import BaseSettings
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class Settings(BaseSettings):
-    cohere_api_key: str
+    COHERE_API_KEY: str
 
     class Confing:
         env_file = ".env"
