@@ -7,4 +7,4 @@ class ChatRequest(BaseModel):
 
 class ChatRespose(BaseModel):
     response: str
-    token_used: int
+    tokens_used: int
