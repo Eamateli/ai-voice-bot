@@ -7,7 +7,7 @@ def test_cohere():
     response = co.generate(
         model ="command",
         prompt="Say hello!",
-        max_tokens=50
+        max_tokens=200
 
     )
     return response.generations[0].text
