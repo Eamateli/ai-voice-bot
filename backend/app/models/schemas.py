@@ -5,6 +5,6 @@ class ChatRequest(BaseModel):
     message: str 
 
 
-class ChatRespose(BaseModel):
+class ChatResponse(BaseModel):
     response: str
     tokens_used: int
