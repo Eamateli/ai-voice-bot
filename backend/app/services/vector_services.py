@@ -17,4 +17,4 @@ class VectorService:
         self.collection =self.chroma_client.get_or_create_collection(
             name="customer_support_docs",
             metadata={"description": "Company knowledge base "}
-        )
+        ) 
