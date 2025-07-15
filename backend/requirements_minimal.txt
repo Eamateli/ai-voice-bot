@@ -8,3 +8,4 @@ langchain-cohere==0.4.4
 chromadb==1.0.15
 pypdf==5.8.0
 python-multipart==0.0.20
+ 
