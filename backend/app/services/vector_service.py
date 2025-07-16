@@ -27,7 +27,8 @@ class VectorService:
         # Use Cohere's embed endpoint directly
         response = self.co.embed(
             texts=[text],
-            model="embed-english-v3.0"
+            model="embed-english-v3.0",
+            input_type="search_document"
         )
         embedding = response.embeddings[0]
         
@@ -44,7 +45,8 @@ class VectorService:
         # Embed the query
         response = self.co.embed(
             texts=[query],
-            model="embed-english-v3.0"
+            model="embed-english-v3.0",
+            input_type="search_query"
         )
         query_embedding = response.embeddings[0]
         

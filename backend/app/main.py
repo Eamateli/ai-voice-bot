@@ -21,7 +21,13 @@ async def test_ai_endpoint():
 
 @app.post("/api/v1/chat", response_model=ChatResponse)
 async def chat(request: ChatRequest):
-    ai_response, tokens = chat_with_ai(request.message)
+    relevant_docs = await vector_service.search(request.message)
+    if relevant_docs:
+        context = "\n\n".join(relevant_docs)
+        ai_response, tokens = chat_with_ai(request.message, context)
+    else:
+        ai_response, tokens = chat_with_ai(request.message)
+    
     return ChatResponse (
         response=ai_response,
         tokens_used= tokens
