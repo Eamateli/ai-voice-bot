@@ -14,16 +14,19 @@ def test_cohere():
     return response.generations[0].text
 
 
-def chat_with_ai(user_message: str):
+def chat_with_ai(user_message: str, context: str = None):
+    if context:
+        prompt = f"Context: {context}\n\nQuestion: {user_message}"
+    else:
+        prompt = user_message
+    
     response = co.generate(
-        model ="command",
-        prompt=user_message,
+        model="command",
+        prompt=prompt,
         max_tokens=200
-
     )
-    return response.generations[0].text
     
     text = response.generations[0].text
-    tokens = len(user_message.split()) + lne(text.split())
-
+    tokens = len(prompt.split()) + len(text.split())
+    
     return text, tokens
