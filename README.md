@@ -1,4 +1,4 @@
-"# AI Voice Bot
+# AI Voice Bot
 
 A learning project to build an AI-powered voice customer service bot using FastAPI, LangChain, Pipecat, and Cohere.
 
