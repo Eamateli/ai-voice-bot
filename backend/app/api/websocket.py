@@ -15,3 +15,18 @@ async def websocket_test(websocket: WebSocket):
     except WebSocketDisconnect:
         print("Client disconnected")
  
+@router.websocket("/voice")
+async def websocket_voice(websocket: WebSocket):
+    await websocket.accept()
+    print("Voice WebSocket connected!")
+
+    try:
+        audio_data = await websocket.receive_bytes()
+        print(f"Received audion chunk: {len(audio_data)} bytes")
+
+        await websocket.send_json({
+            "type": "audio_received",
+            "size": len(audio_data)
+        })
+    except WebSocketDisconnect:
+        print("Voice client disconnected")
