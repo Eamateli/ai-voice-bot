@@ -8,4 +8,6 @@ langchain-cohere==0.4.4
 chromadb==1.0.15
 pypdf==5.8.0
 python-multipart==0.0.20
- 
+SpeechRecognition==3.14.3
+pydub==0.25.1
+gTTS==2.5.4
