@@ -1,7 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Voice Bot Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        div {
+            margin: 20px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        #status {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>AI Voice Bot Test</h1>
@@ -13,7 +41,6 @@
     <div id="response"></div>
     
     <script>
-        // ALL THE JAVASCRIPT CODE GOES HERE!
         let ws;
         let mediaRecorder;
         
@@ -39,20 +66,76 @@
                     // We'll play audio later
                 }
             };
+            
+            ws.onerror = (error) => {
+                document.getElementById('status').textContent = '❌ Connection error!';
+                console.error('WebSocket error:', error);
+            };
+            
+            ws.onclose = () => {
+                document.getElementById('status').textContent = '❌ Disconnected!';
+            };
         }
         
         // Connect when page loads
         connectWebSocket();
         
-        // Add the button click handler here too
-        document.getElementById('startBtn').onclick = () => {
-            // For testing, send a text message
-            ws.send(JSON.stringify({
-                type: 'audio',
-                audio: [0, 0, 0]  // Fake audio for now
-            }));
-            
-            document.getElementById('status').textContent = '🎤 Recording...';
+        // Start recording
+        document.getElementById('startBtn').onclick = async () => {
+            try {
+                // Request microphone access
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                
+                // Create MediaRecorder
+                mediaRecorder = new MediaRecorder(stream);
+                const chunks = [];
+                
+                // Collect audio chunks
+                mediaRecorder.ondataavailable = (event) => {
+                    chunks.push(event.data);
+                };
+                
+                // When recording stops, send to server
+                mediaRecorder.onstop = async () => {
+                    const audioBlob = new Blob(chunks, { type: 'audio/webm' });
+                    const arrayBuffer = await audioBlob.arrayBuffer();
+                    const audioArray = Array.from(new Uint8Array(arrayBuffer));
+                    
+                    // Send real audio!
+                    ws.send(JSON.stringify({
+                        type: 'audio',
+                        audio: audioArray,
+                        format: 'webm'
+                    }));
+                    
+                    // Stop all tracks to release microphone
+                    stream.getTracks().forEach(track => track.stop());
+                };
+                
+                // Start recording
+                mediaRecorder.start();
+                document.getElementById('status').textContent = '🎤 Recording...';
+                
+                // Enable stop button
+                document.getElementById('startBtn').disabled = true;
+                document.getElementById('stopBtn').disabled = false;
+                
+            } catch (error) {
+                alert('Microphone access denied!');
+                console.error('Microphone error:', error);
+            }
+        };
+        
+        // Stop recording
+        document.getElementById('stopBtn').onclick = () => {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                document.getElementById('status').textContent = '⏳ Processing...';
+                
+                // Reset buttons
+                document.getElementById('startBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = true;
+            }
         };
     </script>
 </body>
