@@ -13,7 +13,47 @@
     <div id="response"></div>
     
     <script>
-        // We'll add JavaScript here next
+        // ALL THE JAVASCRIPT CODE GOES HERE!
+        let ws;
+        let mediaRecorder;
+        
+        // Connect to WebSocket
+        function connectWebSocket() {
+            ws = new WebSocket('ws://localhost:8000/ws/voice');
+            
+            ws.onopen = () => {
+                document.getElementById('status').textContent = '✅ Connected!';
+            };
+            
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                
+                if (data.type === 'transcription') {
+                    document.getElementById('transcription').textContent = 
+                        `You said: ${data.text}`;
+                }
+                
+                if (data.type === 'audio_response') {
+                    document.getElementById('response').textContent = 
+                        `Bot says: ${data.text}`;
+                    // We'll play audio later
+                }
+            };
+        }
+        
+        // Connect when page loads
+        connectWebSocket();
+        
+        // Add the button click handler here too
+        document.getElementById('startBtn').onclick = () => {
+            // For testing, send a text message
+            ws.send(JSON.stringify({
+                type: 'audio',
+                audio: [0, 0, 0]  // Fake audio for now
+            }));
+            
+            document.getElementById('status').textContent = '🎤 Recording...';
+        };
     </script>
 </body>
 </html>
