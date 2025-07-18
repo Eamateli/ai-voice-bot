@@ -1,14 +1,15 @@
 from fastapi import FastAPI
 from app.services.cohere_service import test_cohere, chat_with_ai
 from app.models.schemas import ChatRequest, ChatResponse
-from app.api import upload
+from app.api import upload, websocket
 from app.services.vector_service import vector_service
 
 app= FastAPI()
 app.include_router(upload.router)
+app.include_router(websocket.router)
+ 
 
-
-@app.get("/")
+@app.get("/") 
 async def root():
     return {"message":"AI Voice Bot is running!"}
 
