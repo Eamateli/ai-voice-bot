@@ -27,7 +27,7 @@ class VoiceService:
         
     async def text_to_speech(self, text: str) ->bytes:
         try:
-            tts = gTTS(text=text, lang='en' slow=False)
+            tts = gTTS(text=text, lang='en',slow=False)
 
             audio_buffer = io.BytesIO()
             tts.write_to_fp(audio_buffer)
