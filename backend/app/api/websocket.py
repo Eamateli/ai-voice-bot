@@ -32,8 +32,12 @@ async def websocket_voice(websocket: WebSocket):
             
             if data["type"] == "audio":
                 # 2. Convert speech to text
+                audio_format = data.get("format", "webm")
                 audio_bytes = bytes(data["audio"])  # Convert from list
-                user_text = await voice_service.speech_to_text(audio_bytes)
+                user_text = await voice_service.speech_to_text(
+                    audio_bytes,
+                    audio_format
+                )
                 
                 # 3. Send transcription back
                 await websocket.send_json({

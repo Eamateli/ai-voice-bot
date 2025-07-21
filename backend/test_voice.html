@@ -63,10 +63,32 @@
                 if (data.type === 'audio_response') {
                     document.getElementById('response').textContent = 
                         `Bot says: ${data.text}`;
-                    // We'll play audio later
+                    // Append "Done!" to existing status
+                    document.getElementById('status').textContent += ' ✅ Done!';
+                        if (data.audio && data.audio.length > 0) {
+                            // Convert array back to bytes
+                            const audioBytes = new Uint8Array(data.audio);
+                            const audioBlob = new Blob([audioBytes], { type: 'audio/mp3' });
+                            const audioUrl = URL.createObjectURL(audioBlob);
+                            
+                            // Create audio element and play
+                            const audio = new Audio(audioUrl);
+                            audio.play();
+                            
+                            // Clean up when done
+                            audio.onended = () => {
+                                URL.revokeObjectURL(audioUrl);
+                            };
+    }
+                    
+                }
+                
+                if (data.type === 'error') {
+                    // Also append error instead of replacing
+                    document.getElementById('status').textContent += ' ❌ Error!';
                 }
             };
-            
+                        
             ws.onerror = (error) => {
                 document.getElementById('status').textContent = '❌ Connection error!';
                 console.error('WebSocket error:', error);
@@ -107,7 +129,7 @@
                         audio: audioArray,
                         format: 'webm'
                     }));
-                    
+                    document.getElementById('status').textContent = '⏳ Converting speech to text...';
                     // Stop all tracks to release microphone
                     stream.getTracks().forEach(track => track.stop());
                 };
@@ -130,7 +152,6 @@
         document.getElementById('stopBtn').onclick = () => {
             if (mediaRecorder && mediaRecorder.state === 'recording') {
                 mediaRecorder.stop();
-                document.getElementById('status').textContent = '⏳ Processing...';
                 
                 // Reset buttons
                 document.getElementById('startBtn').disabled = false;
