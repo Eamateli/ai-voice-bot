@@ -39,4 +39,4 @@ frontend/yarn-error.log*
 backend/data/knowledge_base/*
 !backend/data/knowledge_base/.gitkeep
 *.db
-*.sqlite
+*.sqlitebackend/data/chroma/
