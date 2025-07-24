@@ -4,27 +4,31 @@ A voice-powered AI customer service bot that learns from uploaded documents and 
 
 ## Overview
 
-This project demonstrates building a full-stack AI application with document processing, vector search, and real-time voice interaction. Upload your documents (PDFs or text files), then ask questions using your microphone. The AI searches through your documents and responds with voice.
+This project demonstrates how to build a full-stack AI application that combines document processing, vector similarity search, and real-time voice interaction.
+
+Users can upload documents (PDFs or plain text files), then ask questions using their microphone. The AI will search through the document content and respond using voice.
 
 ## Tech Stack
 
-**Backend**
-- Python with FastAPI for the REST API and WebSocket server
-- Cohere for AI language processing and embeddings
-- ChromaDB for vector storage and similarity search
-- Pipecat for voice processing pipeline
+### Backend
 
-**Frontend**
-- Next.js with TypeScript
-- Tailwind CSS for styling
-- Web Audio API for microphone access
-- WebSocket for real-time communication
+- **FastAPI** – REST API and WebSocket server
+- **Cohere** – Language processing and embeddings
+- **ChromaDB** – Vector storage and similarity search
+- **Pipecat** – Voice processing pipeline
+
+### Frontend
+
+- **Next.js** with TypeScript
+- **Tailwind CSS** for styling
+- **Web Audio API** for microphone access
+- **WebSocket** for real-time communication
 
 ## Prerequisites
 
 - Python 3.8 or higher
 - Node.js 16 or higher
-- A Cohere API key (free tier available at cohere.com)
+- A Cohere API key (available at [cohere.com](https://cohere.com))
 
 ## Installation
 
@@ -34,11 +38,9 @@ This project demonstrates building a full-stack AI application with document pro
 git clone https://github.com/eamateli/ai-voice-bot.git
 cd ai-voice-bot
 ```
-
-##  Backend Setup
-
+## Backend Setup
+```bash
 cd backend
-
 # Create virtual environment
 python -m venv venv
 
@@ -47,24 +49,21 @@ python -m venv venv
 source venv/bin/activate
 # On Windows:
 venv\Scripts\activate
-
-# Install dependencies
+# Install dependencies 
 pip install -r requirements.txt
-
-# Create environment file
+# Create a .env file
 cp .env.example .env
-
-## Edit the .env file and add your Cohere API key: COHERE_API_KEY=your_api_key_here
-
-## Start the backend server: ```python run.py```
-
- #  Frontend Setup
-
- cd frontend
-
+# Edit the .env file and add your Cohere API key
+COHERE_API_KEY=your_api_key_here
+# Start the backend server
+python run.py
+```
+# Frontend Setup 
+```bash
+cd frontend
 # Install dependencies
 npm install
-
-# Start development server
+# Start the development server
 npm run dev
+
 
