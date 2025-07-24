@@ -1,42 +1,155 @@
-# Python
+# ========================================
+# Python / Backend
+# ========================================
+
+# Virtual Environment
 backend/venv/
-backend/.env
-__pycache__/
+backend/env/
+backend/.venv/
+
+# Python
+backend/__pycache__/
+backend/**/__pycache__/
 *.py[cod]
 *$py.class
 *.so
 .Python
 *.egg-info/
-.pytest_cache/
-.coverage
-htmlcov/
-.tox/
-.mypy_cache/
-.dmypy.json
-dmypy.json
+dist/
+build/
+*.egg
 
-# Next.js / Node
+# Testing
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/.tox/
+backend/.hypothesis/
+
+# Type checking
+backend/.mypy_cache/
+backend/.dmypy.json
+backend/dmypy.json
+
+# ========================================
+# Node / Frontend
+# ========================================
+
+# Dependencies
 frontend/node_modules/
+frontend/.pnp
+frontend/.pnp.*
+frontend/.yarn/*
+!frontend/.yarn/patches
+!frontend/.yarn/plugins
+!frontend/.yarn/releases
+!frontend/.yarn/versions
+
+# Next.js
 frontend/.next/
 frontend/out/
-frontend/.env.local
-frontend/.env.production
-frontend/.vercel
-frontend/.turbo
+frontend/build/
+frontend/next-env.d.ts
+
+# Testing
+frontend/coverage/
+
+# Production
+frontend/dist/
+
+# Debug logs
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
 frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+frontend/lerna-debug.log*
 
-# IDE
+# TypeScript
+frontend/*.tsbuildinfo
+
+# ========================================
+# Environment Variables
+# ========================================
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+frontend/.env
+frontend/.env.*
+!frontend/.env.example
+
+# ========================================
+# IDE / Editors
+# ========================================
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-.DS_Store
+.project
+.classpath
+.c9/
+.settings/
+*.sublime-workspace
+*.sublime-project
 
-# Project specific
+# ========================================
+# Operating System
+# ========================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+Icon
+.DocumentRevisions-V100
+.fseventsd
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# ========================================
+# Project Specific
+# ========================================
+
+# Database files
+*.db
+*.sqlite
+*.sqlite3
+
+# ChromaDB vector storage
+backend/data/chroma/
+
+# Uploaded documents (but keep the directory)
 backend/data/knowledge_base/*
 !backend/data/knowledge_base/.gitkeep
-*.db
-*.sqlitebackend/data/chroma/
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# ========================================
+# Deployment
+# ========================================
+frontend/.vercel
+frontend/.turbo
+.netlify
+
+# ========================================
+# Miscellaneous
+# ========================================
+*.pem
+*.key
+*.cert
+.cache/
