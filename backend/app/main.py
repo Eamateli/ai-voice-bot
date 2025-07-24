@@ -1,10 +1,23 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware 
 from app.services.cohere_service import test_cohere, chat_with_ai
 from app.models.schemas import ChatRequest, ChatResponse
 from app.api import upload, websocket
 from app.services.vector_service import vector_service
 
 app= FastAPI()
+app.include_router(upload.router)
+app.include_router(websocket.router)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Your frontend URL
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all methods (GET, POST, etc.)
+    allow_headers=["*"],  # Allows all headers
+)
+
+# Now include your routers
 app.include_router(upload.router)
 app.include_router(websocket.router)
  
