@@ -1,6 +1,7 @@
 # AI Voice Bot
 
 A voice-powered AI customer service bot that learns from uploaded documents and responds to questions via voice.
+<img width="808" height="466" alt="Screenshot 2025-07-24 173052" src="https://github.com/user-attachments/assets/068046f1-6995-4658-bbdf-5af76df5fd59" />
 
 ## Overview
 
