@@ -3,6 +3,9 @@
 import { useState, useRef, useEffect } from 'react'
 import { Mic, MicOff, Volume2 } from 'lucide-react'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const WS_URL = API_URL.replace(/^http/, 'ws')
+
 interface VoiceInterfaceProps {
   isRecording: boolean
   setIsRecording: (value: boolean) => void
@@ -28,7 +31,7 @@ export default function VoiceInterface({ isRecording, setIsRecording }: VoiceInt
   }, [])
 
   const connectWebSocket = () => {
-    const ws = new WebSocket('ws://localhost:8000/ws/voice')
+    const ws = new WebSocket(`${WS_URL}/ws/voice`)
     
     ws.onopen = () => {
       setIsConnected(true)

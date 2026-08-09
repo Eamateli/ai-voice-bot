@@ -3,6 +3,8 @@
 import { useState, useCallback } from 'react'
 import { Upload, File, CheckCircle, XCircle } from 'lucide-react'
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+
 export default function FileUpload() {
   const [isDragging, setIsDragging] = useState(false)
   const [uploadStatus, setUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle')
@@ -49,7 +51,7 @@ export default function FileUpload() {
     formData.append('file', file)
 
     try {
-      const response = await fetch('http://localhost:8000/api/v1/upload', {
+      const response = await fetch(`${API_URL}/api/v1/upload`, {
         method: 'POST',
         body: formData,
       })

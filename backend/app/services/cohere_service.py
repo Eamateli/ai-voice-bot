@@ -1,32 +1,34 @@
-import cohere 
+import cohere
 from app.config import settings
 
 co = cohere.Client(settings.COHERE_API_KEY)
 
 
 def test_cohere():
-    response = co.generate(
-        model ="command",
-        prompt="Say hello!",
+    response = co.chat(
+        model=settings.COHERE_MODEL,
+        message="Say hello!",
         max_tokens=200
-
     )
-    return response.generations[0].text
+    return response.text
 
 
 def chat_with_ai(user_message: str, context: str = None):
+    preamble = None
     if context:
-        prompt = f"Context: {context}\n\nQuestion: {user_message}"
-    else:
-        prompt = user_message
-    
-    response = co.generate(
-        model="command",
-        prompt=prompt,
+        preamble = (
+            "You are a helpful customer service assistant. Answer the question "
+            "using only the context below. If the answer is not in the context, "
+            f"say you don't know.\n\nContext:\n{context}"
+        )
+
+    response = co.chat(
+        model=settings.COHERE_MODEL,
+        message=user_message,
+        preamble=preamble,
         max_tokens=200
     )
-    
-    text = response.generations[0].text
-    tokens = len(prompt.split()) + len(text.split())
-    
-    return text, tokens
+
+    tokens = int(response.meta.tokens.input_tokens + response.meta.tokens.output_tokens)
+
+    return response.text, tokens
